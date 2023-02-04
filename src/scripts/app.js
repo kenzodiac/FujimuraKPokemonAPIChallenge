@@ -1,8 +1,13 @@
+import { saveFavoriteToLocalStorage, getLocalStorage, removeFromLocalStorage} from "./localStorage.js"
+
 //Variables for linking HTML elements to JS
 let searchField = document.getElementById("searchField");
+let searchField2 = document.getElementById("searchField2");
 let searchBtn = document.getElementById("searchBtn");
 let pokeImgBtn = document.getElementById("pokeImgBtn");
+let pokeImgBtn2 = document.getElementById("pokeImgBtn2");
 let searchRndBtn = document.getElementById("searchRndBtn");
+let searchRndBtn2 = document.getElementById("searchRndBtn2");
 let PokeNameField = document.getElementById("PokeNameField");
 let PokeImgField = document.getElementById("PokeImgField");
 let elemField = document.getElementById("ElemField");
@@ -11,6 +16,12 @@ let MovesField = document.getElementById("MovesField");
 let AbilitiesField = document.getElementById("AbilitiesField");
 let EvoField = document.getElementById("EvoField");
 let FavoritesField = document.getElementById("FavoritesField");
+let giovanni = document.getElementById("giovanni");
+let giovanni2 = document.getElementById("giovanni2");
+let favoritesListBtn = document.getElementById("favoritesListBtn");
+let addFavsBtn = document.getElementById("addFavsBtn");
+let addFavsBtn2 = document.getElementById("addFavsBtn2");
+
 
 //global variables for storing called Pokemon information
 //raw json data from api calls
@@ -44,7 +55,7 @@ let pokeMoves = [];
 //storing pokemon evolution chain information
 let pokeEvoChain = [];
 
-//API call 
+//API calls
 async function PokemonAPICall(input){
     let PokemonAPIURL = `https://pokeapi.co/api/v2/pokemon/${input}/`
     const promise = await fetch(PokemonAPIURL);
@@ -75,6 +86,8 @@ async function PokemonSpeciesAPICall(input){
     } else {
         EvolutionChainAPICall(currentPokeSpeciesInfo.evolution_chain.url);
     }
+    ConsiderPokeColor(currentPokeSpeciesInfo.color.name, pokeImgBtn);
+    ConsiderPokeColor(currentPokeSpeciesInfo.color.name, pokeImgBtn2);
 };
 
 async function EvolutionChainAPICall(input){
@@ -143,6 +156,7 @@ const GetPokeImgURL = () => {
     pokePortrait = currentPokeInfo.sprites.other["official-artwork"].front_default;
     shinyPokePortrait = currentPokeInfo.sprites.other["official-artwork"].front_shiny;
     pokeImgBtn.src = pokePortrait;
+    pokeImgBtn2.src = pokePortrait;
 };
 
 const DisplayPokeName = () => {
@@ -185,8 +199,28 @@ const DisplayPokeMoves = () => {
     MovesField.textContent = pokeMoves.join('; ');
 }
 
-const DisplayEvolutionaryPaths = (input) => {
-
+const ConsiderPokeColor = (input, pokeImgPassThru) => {
+    if (input == 'black'){
+        pokeImgPassThru.style.backgroundColor = "";
+    } else if (input == 'blue'){
+        pokeImgPassThru.style.backgroundColor = "#0000FF";
+    } else if (input == 'brown'){
+        pokeImgPassThru.style.backgroundColor = "#964B00";
+    } else if (input == 'gray'){
+        pokeImgPassThru.style.backgroundColor = "#808080";
+    } else if (input == 'green'){
+        pokeImgPassThru.style.backgroundColor = "#FF5733";
+    } else if (input == 'pink'){
+        pokeImgPassThru.style.backgroundColor = "#FFC0CB";
+    } else if (input == 'purple'){
+        pokeImgPassThru.style.backgroundColor = "#A020F0";
+    } else if (input == 'red'){
+        pokeImgPassThru.style.backgroundColor = "#FF0000";
+    } else if (input == 'white'){
+        pokeImgPassThru.style.backgroundColor = "#FFFFFF";
+    } else if (input == 'yellow'){
+        pokeImgPassThru.style.backgroundColor = "#FFFF00";
+    }
 }
 
 const CapitalizeFirstLetters = (input) => {
@@ -211,15 +245,34 @@ const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
 
-searchBtn.addEventListener("click", function(){
-    PokemonAPICall(searchField.value);
-    PokemonSpeciesAPICall(searchField.value);
+searchField.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter'){
+        PokemonAPICall(searchField.value.toLowerCase());
+        PokemonSpeciesAPICall(searchField.value.toLowerCase());
+        giovanni.textContent = "";
+    }
+});
+
+searchField2.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter'){
+        PokemonAPICall(searchField2.value.toLowerCase());
+        PokemonSpeciesAPICall(searchField2.value.toLowerCase());
+        giovanni2.textContent = "";
+    }
 });
 
 searchRndBtn.addEventListener('click', function(){
     let randomInt = getRandomInt(1, 1008);
     PokemonAPICall(randomInt);
     PokemonSpeciesAPICall(randomInt);
+    giovanni.textContent = "";
+});
+
+searchRndBtn2.addEventListener('click', function(){
+    let randomInt = getRandomInt(1, 1008);
+    PokemonAPICall(randomInt);
+    PokemonSpeciesAPICall(randomInt);
+    giovanni2.textContent = "";
 });
 
 pokeImgBtn.addEventListener('click', function(){
@@ -229,3 +282,77 @@ pokeImgBtn.addEventListener('click', function(){
         pokeImgBtn.src = pokePortrait;
     }
 });
+
+pokeImgBtn2.addEventListener('click', function(){
+    if (pokeImgBtn2.src == pokePortrait) {
+        pokeImgBtn2.src = shinyPokePortrait;
+    } else {
+        pokeImgBtn2.src = pokePortrait;
+    }
+});
+
+favoritesListBtn.addEventListener("click", function(){
+    FavoritesField.innerHTML = "";
+    let localStorageData = getLocalStorage();
+    CreateElements();
+});
+
+addFavsBtn.addEventListener("click", function(){
+    AddFavsActions();
+});
+
+addFavsBtn2.addEventListener("click", function(){
+    AddFavsActions();
+});
+
+function AddFavsActions(){
+    let pokemon = {name: CapitalizeFirstLetters(currentPokeSpeciesInfo.name), id: currentPokeSpeciesInfo.id};
+    saveFavoriteToLocalStorage(pokemon);
+    if (FavoritesField.innerHTML != ""){
+        FavoritesField.innerHTML = "";
+        CreateElements();
+    }
+}
+
+//function for creating/displaying favorite's list
+function CreateElements(){
+    let favorites = getLocalStorage();
+    //.map to create all of the buttons from the array of data in localStorage
+    favorites.map(pokemon => {
+
+        //creating the buttons showing all of the locations stored in localStorage
+        let pokeBtn = document.createElement('button');
+        pokeBtn.className = 'fav-btn';
+        pokeBtn.textContent = "#" + pokemon.id + ": " + pokemon.name;
+        pokeBtn.type = 'button'
+        pokeBtn.style = 'border-radius: 10px 0px 0px 10px; background-color: #434343;';
+        pokeBtn.addEventListener('click', function(){
+            PokemonAPICall(pokemon.id);
+            PokemonSpeciesAPICall(pokemon.id);
+            giovanni.textContent = "";
+            giovanni2.textContent = "";
+        });
+
+        //creating the delete buttons to remove items from localStorage
+        let deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-fav-btn';
+        deleteBtn.textContent = 'X';
+        deleteBtn.type = 'button';
+        deleteBtn.style = 'width: 10%; border-radius: 0px 10px 10px 0px; background-color: rgb(220, 53, 69);';
+        deleteBtn.addEventListener('click', function(){
+            removeFromLocalStorage(pokemon);
+            FavoritesField.innerHTML = "";
+            CreateElements();
+        });
+
+        //creating the divs to put the buttons into
+        let outsideDiv = document.createElement("div");
+        outsideDiv.style = 'margin-bottom: 1rem;';
+        outsideDiv.className = '';
+
+        outsideDiv.appendChild(pokeBtn);
+        outsideDiv.appendChild(deleteBtn);
+
+        FavoritesField.appendChild(outsideDiv);
+    });
+};

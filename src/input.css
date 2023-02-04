@@ -1,3 +1,132 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face {
+    font-family: VT323;
+    src: url(../src/fonts/VT323-Regular.ttf);
+}
+
+.title-txt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.favorites-bar{
+    background-color: #713E3E;
+    height: 100vh;
+}
+
+.favorites-menu-btn{
+    background-color: #313131;
+    color: white;
+    font-size: 30px;
+    width: 95%;
+    height: auto;
+    border-radius: 10px;
+    line-height: 33px;
+    font-family: VT323;
+}
+
+.center-items{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.side-menu-image{
+    width: 95%;
+    height: auto;
+}
+
+.center-favs{
+    padding-left: 5%;
+}
+
+.fav-btn{
+    color: white;
+    font-size: 25px;
+    height: auto;
+    font-family: VT323;
+    width: 85%;
+}
+
+.delete-fav-btn{
+    color: white;
+    font-size: 25px;
+    height: auto;
+    font-family: VT323;
+}
+
+.main-pg{
+    background-color: #2E2E2E;
+    max-height: 100vh;
+}
+
+.data-label{
+    color: #ed1b24;
+    font-family: VT323;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: .2em;
+}
+
+.poke-data{
+    color: white;
+    font-family: VT323;
+    font-size: 32px;
+}
+
+.pokeImg{
+    width: 80%; 
+    height: auto;
+    border-width: 5px;
+    border-color: #202020;
+    border-radius: 10px;
+}
+
+.giovanni{
+    font-family: VT323;
+    color: white;
+    font-size: 36px;
+}
+
+.search-field-style{
+    width: 80%;
+    height: 33px;
+    border-radius: 10px;
+    background-color: #713E3E;
+    font-family: VT323;
+    font-size: 20px;
+    margin-top: 1rem;
+}
+
+.rnd-search-btn-style{
+    width: 80%;
+    height: 33px;
+    border-radius: 10px;
+    background-color: #713E3E;
+    color: white;
+    font-family: VT323;
+    font-size: 25px;
+    line-height: 25px;
+    margin-top: 1rem;
+}
+
+.add-favorites-btn-style{
+    width: 80%;
+    height: 33px;
+    border-radius: 10px;
+    background-color: #713E3E;
+    font-family: VT323;
+    font-size: 25px;
+    color: white;
+    line-height: 25px;
+    margin-top: 1rem;
+}
+
+.searchBtn{
+    height: 33px;
+}

@@ -1,33 +1,89 @@
+<!--
+    -Kenneth Fujimura
+    -Date Revised: 4/4/2023
+    -"Pokemon API Challenge"
+    -This assignment was to make a single page web app that called multiple APIs to bring back various types of information about Pokemon. It was also an assignment to introduce us to and practice Tailwind CSS.
+    -Notes: If you click on the picture of the Pokemon that's called, it will switch the image between normal and shiny types. The assignment was also only supposed to be searchable for the first 5 generations of Pokemon, but I made it work with all 9 generations.
+-->
 <!doctype html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon API Challenge</title>
+    <link rel="shortcut icon" href="./images/RocketIcon.webp" type="image/x-icon">
     <link href="/dist/output.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1> -->
+    <div class="grid grid-cols-12">
+        <div class="grid col-span-3 favorites-bar">
+            <div class="center-items">
+                <img class="side-menu-image py-4" src="./images/JessieJames.png">
+                <button id="favoritesListBtn" class="favorites-menu-btn">Bounty Board</button>
+            </div>
+            <div id="FavoritesField" class="center-favs">
+                
+            </div>
+
+        </div>
+        <div class="grid col-span-9 grid-rows-6 main-pg">
+            <div class="row-span-1 title-txt">
+                <!-- Team Rocket Docier -->
+                <img src="./images/teamRocketLogo.png" style="height: 95%; width: auto;">
+            </div>
+            <div class="grid row-span-5 grid-cols-12">
+                <div class="grid grid-row-6 col-span-12 md:col-span-8 md:hidden block">
+                    <div id="PokeImgField" class="row-span-3 center-items">
+                        <img id="pokeImgBtn" src="./images/giovanni2.webp" class="pokeImg" style="" title="click to toggle between normal and shiny version">
+                        <span id="giovanni" class="giovanni">"Bring... Me... Pokemon!"</span>
+                    </div>
+                    <div class="row-span-3 center-items">
+                        <input type="text" id="searchField" class="search-field-style" placeholder=" Search by Name/Pokedex Number">
+                        <button id="searchRndBtn" type="button" class="rnd-search-btn-style">GET Random Target</button>
+                        <button id="addFavsBtn" type="button" class="add-favorites-btn-style" style="align-self: center;">Issue Bounty</button>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-4 overflow-y-auto p-4">
+                    <div class="data-label">[Target]:</div>
+                    <div id="PokeNameField" class="poke-data">N/A</div>
+                    <div class="data-label">[Element]:</div>
+                    <div id="ElemField" class="poke-data">N/A</div>
+                    <div class="data-label">[Known Location]:</div>
+                    <div id="LocField" class="poke-data">N/A</div>
+                    <div class="data-label">[Abilities]:</div>
+                    <div id="AbilitiesField" class="poke-data">N/A</div>
+                    <div class="data-label">[Evolution Chain]:</div>
+                    <div id="EvoField" class="poke-data">N/A</div>
+                    <div class="data-label">[Moves]:</div>
+                    <div id="MovesField" class="poke-data">N/A</div>
+                </div>
+                <div class="grid-row-6 col-span-12 md:col-span-8 hidden md:block">
+                    <div id="PokeImgField" class="row-span-3 center-items">
+                        <img id="pokeImgBtn2" src="./images/giovanni2.webp" class="pokeImg" style="" title="click to toggle between normal and shiny version">
+                        <span id="giovanni2" class="giovanni">"Bring... Me... Pokemon!"</span>
+                    </div>
+                    <div class="row-span-3 center-items">
+                        <input type="text" id="searchField2" class="search-field-style" placeholder=" Search by Name/Pokedex Number">
+                        <button id="searchRndBtn2" type="button" class="rnd-search-btn-style">GET Random Target</button>
+                        <button id="addFavsBtn2" type="button" class="add-favorites-btn-style" style="align-self: center;">Issue Bounty</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+
 
     
-    <input type="text" id="searchField" placeholder="search by name or pokedex #">
-    <button type="button" id="searchBtn">Search</button>
 
-    <button id="searchRndBtn" type="button">GET Random Pokemon</button><br><br>
 
-    <div id="PokeNameField">Pokemon Name Here</div><br><br>
-    <div id="PokeImgField"><img id="pokeImgBtn" src="" style="width: 200px; height: auto;" title="click to toggle between normal and shiny version"></div><br><br>
-    <div id="ElemField">Pokemon Element Here</div><br><br>
-    <div id="LocField">Pokemon Location Here</div><br><br>
-    <div id="MovesField">Pokemon Moves Here</div><br><br>
-    <div id="AbilitiesField">Pokemon Abilities Here</div><br><br>
-    <div id="EvoField">Pokemon Evolution Chain</div><br><br>
-    <div id="FavoritesField">Favorites</div>
-
-<script src="./scripts/app.js"></script>
+<script src="./scripts/app.js" type="module"></script>
 </body>
 
 </html>
